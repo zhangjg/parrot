@@ -10,6 +10,7 @@ const re_skip_default = /(\r\n|\s)/u;
 const re_han_cut_all = /([\u4E00-\u9FD5]+)/u;
 const re_skip_cut_all = /[^a-zA-Z0-9+#\n]/u;
 const re_userdict = /^(.+?)( [0-9]+\.?[0-9]+)?( [a-z]+)?$/u;
+const finalseg = require("./finalseg");
 
 class Tokenizer{
     constructor(dictionary = "dict.txt"){
@@ -187,8 +188,7 @@ class Tokenizer{
                         buf = '';
                     }else{
                         if( self.FREQ[buf] == undefined){
-                            var recognized = finalseg.cut(buf);//FIXME: 还没有实现
-                            for( var t of recognized ){
+                            var recognized = finalseg.cut(buf);                            for( var t of recognized ){
                                 yield t;
                             }
                         }else{
@@ -209,7 +209,7 @@ class Tokenizer{
                 yield buf;
             }
             else if(self.FREQ[buf] == undefined){
-                var recognized = finalseg.cut(buf);//FIXME: 还没有实现
+                var recognized = finalseg.cut(buf);
                 for(var t of recognized){
                     yield t;
                 }
