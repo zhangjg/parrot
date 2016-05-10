@@ -176,30 +176,35 @@ class Tokenizer{
         var x = 0;
         var buf = '';
         const N = sentence.length;
+        var y = null;
         while( x < N){
-            var y = route[x][1]+1;
+            y = route[x][1]+1;
             var l_word = sentence.substring(x,y);
             if(y-x == 1){
                 buf += l_word;
-            }else{
+            }
+            else{
                 if( buf != ''){
                     if(buf.length == 1){
                         yield buf;
                         buf = '';
-                    }else{
+                    }
+                    else{
                         if( self.FREQ[buf] == undefined){
-                            var recognized = finalseg.cut(buf);                            for( var t of recognized ){
+                            var recognized = finalseg.cut(buf);
+                            for( var t of recognized ){
                                 yield t;
                             }
-                        }else{
+                        }
+                        else{
                             for(var elem of buf){
                                 yield elem;
                             }
                         }
                         buf ='';
                     }
-                    yield l_word;
                 }
+                yield l_word;
             }
             x=y;
         }
